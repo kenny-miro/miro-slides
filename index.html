@@ -84,24 +84,24 @@
     const PillarCard = ({ pillar, onClick }) => (
       <div
         onClick={() => onClick(pillar)}
-        className="group relative flex flex-col justify-between p-8 bg-white border-[4px] border-[#1C1C1E] rounded-[2.2rem] cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-[10px_10px_0px_#1C1C1E] shadow-[6px_6px_0px_#1C1C1E] h-full"
+        className="group relative flex flex-col justify-between p-6 bg-white border-[4px] border-[#1C1C1E] rounded-[2.2rem] cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-[10px_10px_0px_#1C1C1E] shadow-[6px_6px_0px_#1C1C1E] h-full"
       >
         <div>
           <div
-            className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 border-2 border-[#1C1C1E] transition-colors"
+            className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 border-2 border-[#1C1C1E] transition-colors"
             style={{ backgroundColor: pillar.color }}
           >
             {pillar.icon}
           </div>
-          <h2 className="text-[21px] font-[900] italic uppercase leading-none tracking-tight mb-4 text-[#1C1C1E]">
+          <h2 className="text-[16px] font-[900] italic uppercase leading-tight tracking-tight mb-2 text-[#1C1C1E]">
             {pillar.title}
           </h2>
-          <p className="text-[13.5px] font-bold leading-tight text-[#1C1C1E]/70">
+          <p className="text-[12px] font-bold leading-tight text-[#1C1C1E]/70">
             {pillar.tagline}
           </p>
         </div>
-        <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wider text-[#0500FF] mt-6">
-          Explore Shift <ArrowRight size={14} strokeWidth={3} />
+        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-wider text-[#0500FF] mt-4">
+          Explore Shift <ArrowRight size={12} strokeWidth={3} />
         </div>
       </div>
     );
@@ -168,7 +168,7 @@
           today: "Context lives everywhere: docs, boards, Slack threads, screenshots, someone's head. You spend time re-explaining, re-finding, and re-deciding across disconnected tools.",
           future: "We understand what you're building and pull in the right artifacts automatically: research, feedback, previous versions, technical limits. Every iteration starts informed instead of blank.",
           color: "#47D1C4",
-          icon: <Database size={28} strokeWidth={2.5} />,
+          icon: <Database size={24} strokeWidth={2.5} />,
           tags: ["MEMORY-AWARE", "AUTO-SYNC", "KNOWLEDGE-GRAPH"]
         },
         {
@@ -178,7 +178,7 @@
           today: "Prototypes are static artifacts. Decisions happen in meetings, get debated in comments, and often stall or repeat because context is lost.",
           future: "Prototypes surface assumptions, highlight risks, simulate impact, and track decisions in-line so teams can align, choose, and move forward in the same space where the work is happening.",
           color: "#867AFF",
-          icon: <ShieldCheck size={28} strokeWidth={2.5} />,
+          icon: <ShieldCheck size={24} strokeWidth={2.5} />,
           tags: ["IMPACT-SIMULATION", "IN-LINE-DECISIONS", "RISK-SCOPING"]
         },
         {
@@ -188,7 +188,7 @@
           today: "Users have to refine and translate requirements to move idea to final design or build. This manual bridge creates friction and errors.",
           future: "Prototypes carry structure, states, edge cases, and logic - making them a starting point for implementation, not just a visual reference for developers to eye-ball.",
           color: "#FFDD33",
-          icon: <Zap size={28} strokeWidth={2.5} />,
+          icon: <Zap size={24} strokeWidth={2.5} />,
           tags: ["LOGIC-READY", "STATE-MAPPING", "DEV-ALIGNED"]
         },
         {
@@ -198,7 +198,7 @@
           today: "AI tools generate drafts, but you're still steering everything manually and stitching ideas together yourself without persistent memory.",
           future: "You work with persistent, always-on, SME collaborators that understand your goals, remember past decisions, explore alternatives, and proactively suggest improvements.",
           color: "#0500FF",
-          icon: <Cpu size={28} strokeWidth={2.5} />,
+          icon: <Cpu size={24} strokeWidth={2.5} />,
           tags: ["PERSISTENT-SME", "PROACTIVE-LOGIC", "COLLAB-ENGINE"]
         }
       ];
@@ -213,21 +213,21 @@
               backgroundSize: '24px 24px'
             }}
           >
-            <div className="pt-12 px-16 pb-6 relative z-10">
+            <div className="pt-8 px-16 pb-4 relative z-10">
               <div className="flex items-center gap-4 mb-3">
                 <span className="bg-[#1C1C1E] text-[#FFDD33] px-3 py-1 text-[11px] font-black italic uppercase tracking-widest rounded">
                   STRATEGY VISION FY26
                 </span>
                 <div className="h-[2px] flex-1 bg-[#1C1C1E]/10"></div>
               </div>
-              <h1 className="text-[64px] font-[900] italic uppercase leading-[0.9] text-[#1C1C1E] tracking-tighter">
+              <h1 className="text-[52px] font-[900] italic uppercase leading-[0.9] text-[#1C1C1E] tracking-tighter">
                 THE FUTURE <span className="text-[#0500FF]">OF PRODUCT</span> CREATION
               </h1>
-              <p className="text-[18px] font-bold text-[#1C1C1E]/60 mt-3 max-w-2xl italic uppercase">
+              <p className="text-[16px] font-bold text-[#1C1C1E]/60 mt-2 max-w-2xl italic uppercase">
                 Moving from a tool of record to a tool of creation.
               </p>
             </div>
-            <div className="px-16 grid grid-cols-4 gap-6 h-[390px] relative z-10">
+            <div className="px-16 grid grid-cols-4 gap-6 h-[430px] relative z-10">
               {pillars.map((pillar) => (
                 <PillarCard key={pillar.id} pillar={pillar} onClick={setSelectedPillar} />
               ))}
