@@ -1,0 +1,232 @@
+ <!DOCTYPE html> 
+  <html lang="en">                                                                                                                              
+  <head>                                                                                                                                        
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Future of Product Creation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18",
+        "react/jsx-runtime": "https://esm.sh/react@18/jsx-runtime",
+        "react-dom/client": "https://esm.sh/react-dom@18/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.363.0"
+      }
+    }
+    </script>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; padding: 0; }
+      @keyframes anim-fade { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes anim-zoom { from { transform: scale(0.95); } to { transform: scale(1); } }
+      .animate-in { animation: anim-fade 300ms ease both, anim-zoom 300ms ease both; }
+      .scrollbar-hide::-webkit-scrollbar { display: none; }
+      .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel" data-type="module">
+      import React, { useState, useEffect } from 'react';
+      import { createRoot } from 'react-dom/client';
+      import { Database, ShieldCheck, Zap, Cpu, X, ArrowRight } from 'lucide-react';
+
+      const useAutoScaler = () => {
+        useEffect(() => {
+          const scaler = () => {
+            const root = document.getElementById('dashboard-root');
+            if (root) {
+              const scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+              root.style.transform = `scale(${scale})`;
+            }
+          };
+          window.addEventListener('resize', scaler);
+          scaler();
+          return () => window.removeEventListener('resize', scaler);
+        }, []);
+      };
+
+      const PillarCard = ({ pillar, onClick }) => (
+        <div
+          onClick={() => onClick(pillar)}
+          className="group relative flex flex-col justify-between p-8 bg-white border-[4px] border-[#1C1C1E] rounded-[2.2rem] cursor-pointer
+  transition-all duration-300 hover:-translate-y-2 hover:shadow-[10px_10px_0px_#1C1C1E] shadow-[6px_6px_0px_#1C1C1E] h-full"
+        >
+          <div>
+            <div
+              className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 border-2 border-[#1C1C1E] transition-colors"
+              style={{ backgroundColor: pillar.color }}
+            >
+              {pillar.icon}
+            </div>
+            <h2 className="text-[21px] font-[900] italic uppercase leading-none tracking-tight mb-4 text-[#1C1C1E]">
+              {pillar.title}
+            </h2>
+            <p className="text-[13.5px] font-bold leading-tight text-[#1C1C1E]/70">
+              {pillar.tagline}
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-[11px] font-black uppercase tracking-wider text-[#0500FF] mt-6">
+            Explore Shift <ArrowRight size={14} strokeWidth={3} />
+          </div>
+        </div>
+      );
+
+      const DetailView = ({ pillar, onClose }) => (
+        <div className="absolute inset-0 z-50 flex items-center justify-center p-16 bg-white/95 backdrop-blur-md animate-in">
+          <button
+            onClick={onClose}
+            className="absolute top-10 right-10 w-12 h-12 bg-[#1C1C1E] text-white rounded-full flex items-center justify-center hover:scale-110
+  transition-transform active:scale-95 shadow-lg"
+          >
+            <X size={24} strokeWidth={3} />
+          </button>
+          <div className="max-w-6xl w-full grid grid-cols-12 gap-10 max-h-[600px]">
+            <div className="col-span-4 flex flex-col justify-center">
+              <div
+                className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6 border-4 border-[#1C1C1E]"
+                style={{ backgroundColor: pillar.color }}
+              >
+                {React.cloneElement(pillar.icon, { size: 40, strokeWidth: 2.5 })}
+              </div>
+              <h2 className="text-[48px] font-[900] italic uppercase leading-[0.9] tracking-tighter text-[#1C1C1E] mb-5">
+                {pillar.title}
+              </h2>
+              <p className="text-[18px] font-bold italic text-[#1C1C1E]/60 uppercase leading-tight">
+                {pillar.tagline}
+              </p>
+            </div>
+            <div className="col-span-8 flex flex-col gap-6 overflow-hidden">
+              <div className="bg-[#F5F5F5] rounded-[2rem] p-8 border-2 border-[#1C1C1E]/10 relative">
+                <div className="absolute top-6 left-0 w-1.5 h-10 bg-[#1C1C1E]"></div>
+                <span className="text-[10px] font-black italic uppercase tracking-widest text-[#1C1C1E]/40 mb-3 block">TODAY</span>
+                <div className="max-h-[120px] overflow-y-auto pr-4 scrollbar-hide">
+                  <p className="text-[18px] font-bold leading-snug text-[#1C1C1E]">{pillar.today}</p>
+                </div>
+              </div>
+              <div className="bg-white rounded-[2rem] p-8 border-[4px] border-[#1C1C1E] shadow-[8px_8px_0px_#1C1C1E] relative">
+                <div className="absolute top-6 left-0 w-2 h-12" style={{ backgroundColor: pillar.color }}></div>
+                <span className="text-[10px] font-black italic uppercase tracking-widest text-[#0500FF] mb-3 block">IN THE FUTURE</span>
+                <div className="max-h-[180px] overflow-y-auto pr-4 scrollbar-hide">
+                  <p className="text-[20px] font-bold leading-snug text-[#1C1C1E]">{pillar.future}</p>
+                </div>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {pillar.tags.map(tag => (
+                    <div key={tag} className="px-3 py-1.5 rounded-full border-2 border-[#1C1C1E] text-[9px] font-black uppercase
+  tracking-tighter">
+                      {tag}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+
+      function App() {
+        useAutoScaler();
+        const [selectedPillar, setSelectedPillar] = useState(null);
+
+        const pillars = [
+          {
+            id: 1,
+            title: "Adaptive Context",
+            tagline: "The work carries its own memory so you don't have to.",
+            today: "Context lives everywhere: docs, boards, Slack threads, screenshots, someone's head. You spend time re-explaining,
+  re-finding, and re-deciding across disconnected tools.",
+            future: "We understand what you're building and pull in the right artifacts automatically: research, feedback, previous versions,
+  technical limits. Every iteration starts informed instead of blank.",
+            color: "#47D1C4",
+            icon: <Database size={28} strokeWidth={2.5} />,
+            tags: ["MEMORY-AWARE", "AUTO-SYNC", "KNOWLEDGE-GRAPH"]
+          },
+          {
+            id: 2,
+            title: "Better Decisions",
+            tagline: "Decisions happen where the work is happening.",
+            today: "Prototypes are static artifacts. Decisions happen in meetings, get debated in comments, and often stall or repeat because
+  context is lost.",
+            future: "Prototypes surface assumptions, highlight risks, simulate impact, and track decisions in-line so teams can align, choose,
+  and move forward in the same space where the work is happening.",
+            color: "#867AFF",
+            icon: <ShieldCheck size={28} strokeWidth={2.5} />,
+            tags: ["IMPACT-SIMULATION", "IN-LINE-DECISIONS", "RISK-SCOPING"]
+          },
+          {
+            id: 3,
+            title: "Designed to Ship",
+            tagline: "Every prototype is structured to move forward and ready to ship.",
+            today: "Users have to refine and translate requirements to move idea to final design or build. This manual bridge creates friction
+  and errors.",
+            future: "Prototypes carry structure, states, edge cases, and logic - making them a starting point for implementation, not just a
+  visual reference for developers to eye-ball.",
+            color: "#FFDD33",
+            icon: <Zap size={28} strokeWidth={2.5} />,
+            tags: ["LOGIC-READY", "STATE-MAPPING", "DEV-ALIGNED"]
+          },
+          {
+            id: 4,
+            title: "AI Teammate",
+            tagline: "We don't build alone. We build alongside intelligent collaborators.",
+            today: "AI tools generate drafts, but you're still steering everything manually and stitching ideas together yourself without
+  persistent memory.",
+            future: "You work with persistent, always-on, SME collaborators that understand your goals, remember past decisions, explore
+  alternatives, and proactively suggest improvements.",
+            color: "#0500FF",
+            icon: <Cpu size={28} strokeWidth={2.5} />,
+            tags: ["PERSISTENT-SME", "PROACTIVE-LOGIC", "COLLAB-ENGINE"]
+          }
+        ];
+
+        return (
+          <div className="fixed inset-0 bg-[#F5F5F5] flex items-center justify-center overflow-hidden">
+            <div
+              id="dashboard-root"
+              className="w-[1280px] h-[720px] bg-white border-[1px] border-[#EAEAEA] relative overflow-hidden shadow-2xl origin-center"
+              style={{
+                backgroundImage: 'radial-gradient(#EAEAEA 1.5px, transparent 0)',
+                backgroundSize: '24px 24px'
+              }}
+            >
+              <div className="pt-12 px-16 pb-6 relative z-10">
+                <div className="flex items-center gap-4 mb-3">
+                  <span className="bg-[#1C1C1E] text-[#FFDD33] px-3 py-1 text-[11px] font-black italic uppercase tracking-widest rounded">
+                    STRATEGY VISION FY26
+                  </span>
+                  <div className="h-[2px] flex-1 bg-[#1C1C1E]/10"></div>
+                </div>
+                <h1 className="text-[64px] font-[900] italic uppercase leading-[0.9] text-[#1C1C1E] tracking-tighter">
+                  THE FUTURE <span className="text-[#0500FF]">OF PRODUCT</span> CREATION
+                </h1>
+                <p className="text-[18px] font-bold text-[#1C1C1E]/60 mt-3 max-w-2xl italic uppercase">
+                  Moving from a tool of record to a tool of creation.
+                </p>
+              </div>
+              <div className="px-16 grid grid-cols-4 gap-6 h-[390px] relative z-10">
+                {pillars.map((pillar) => (
+                  <PillarCard key={pillar.id} pillar={pillar} onClick={setSelectedPillar} />
+                ))}
+              </div>
+              {selectedPillar && (
+                <DetailView pillar={selectedPillar} onClose={() => setSelectedPillar(null)} />
+              )}
+              <div className="absolute bottom-6 left-16 right-16 flex justify-between items-center opacity-30 pointer-events-none">
+                <div className="text-[#1C1C1E] font-black italic uppercase text-[11px] tracking-[0.2em]">Strategy - Execution - Delight</div>
+                <div className="text-[#1C1C1E] font-black italic uppercase text-[11px] tracking-[0.2em]">© FY26 MIRO VISION</div>
+              </div>
+              <div className="absolute -bottom-20 -right-20 text-[260px] font-[900] italic uppercase text-[#1C1C1E]/[0.02] tracking-tighter
+  pointer-events-none">
+                MIRO
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      createRoot(document.getElementById('root')).render(<App />);
+    </script>
+  </body>
+  </html>
